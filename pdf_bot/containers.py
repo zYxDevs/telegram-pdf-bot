@@ -15,6 +15,7 @@ from pdf_bot.decrypt import DecryptService
 from pdf_bot.encrypt import EncryptService
 from pdf_bot.file import FileHandlers, FileService
 from pdf_bot.file_task import FileTaskService
+from pdf_bot.image import ImageHandlers, ImageService
 from pdf_bot.io import IOService
 from pdf_bot.merge import MergeHandlers, MergeService
 from pdf_bot.pdf import PdfService
@@ -83,6 +84,7 @@ class Services(containers.DeclarativeContainer):
         pdf_service=pdf,
         telegram_service=telegram,
     )
+    image = providers.Factory(ImageService, pdf_service=pdf, telegram_service=telegram)
     merge = providers.Factory(MergeService, pdf_service=pdf, telegram_service=telegram)
     rename = providers.Factory(
         RenameService,
@@ -135,6 +137,7 @@ class Handlers(containers.DeclarativeContainer):
         scale_service=services.scale,
         split_service=services.split,
     )
+    image = providers.Factory(ImageHandlers, image_service=services.image)
     merge = providers.Factory(MergeHandlers, merge_service=services.merge)
     text = providers.Factory(TextHandlers, text_service=services.text)
     watermark = providers.Factory(
