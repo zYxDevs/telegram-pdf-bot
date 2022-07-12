@@ -45,7 +45,7 @@ def image_cov_handler() -> ConversationHandler:
         MessageHandler(Filters.document | Filters.photo, check_image),
         MessageHandler(TEXT_FILTER, check_text),
     ]
-    conv_handler = ConversationHandler(
+    return ConversationHandler(
         entry_points=[CommandHandler("image", image)],
         states={
             WAIT_IMAGE: handlers,
@@ -55,8 +55,6 @@ def image_cov_handler() -> ConversationHandler:
         allow_reentry=True,
         run_async=True,
     )
-
-    return conv_handler
 
 
 def image(update: Update, context: CallbackContext) -> int:
@@ -98,10 +96,12 @@ def check_image(update: Update, context: CallbackContext) -> int:
     image_locks[user_id].acquire()
 
     if image_file is None:
-        if not context.user_data[IMAGE_IDS]:
-            result = ask_first_image(update, context)
-        else:
-            result = ask_next_image(update, context)
+        result = (
+            ask_next_image(update, context)
+            if context.user_data[IMAGE_IDS]
+            else ask_first_image(update, context)
+        )
+
     else:
         _ = set_lang(update, context)
         try:
@@ -177,11 +177,10 @@ def check_text(update: Update, context: CallbackContext) -> int:
 
         if not check_user_data(update, context, IMAGE_IDS):
             result = ConversationHandler.END
-        else:
-            if text == _(REMOVE_LAST):
-                result = remove_image(update, context)
-            elif text in [_(BEAUTIFY), _(TO_PDF)]:
-                result = process_all_images(update, context)
+        elif text == _(REMOVE_LAST):
+            result = remove_image(update, context)
+        elif text in [_(BEAUTIFY), _(TO_PDF)]:
+            result = process_all_images(update, context)
 
         image_locks[user_id].release()
     elif text == _(CANCEL):

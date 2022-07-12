@@ -64,9 +64,7 @@ def test_add_watermark_to_pdf(
     wmk_reader.pages = [wmk_page]
 
     def pdf_file_reader_side_effect(file_id: str, *_args, **_kwargs):
-        if file_id == src_file_id:
-            return src_reader
-        return wmk_reader
+        return src_reader if file_id == src_file_id else wmk_reader
 
     with patch("builtins.open") as mock_open, patch(
         "pdf_bot.pdf.pdf_service.PdfFileReader"
@@ -157,9 +155,7 @@ def test_compress_pdf(
     new_size = randint(1, 10)
 
     def getsize_side_effect(path: str, *_args, **_kwargs):
-        if path == file_path:
-            return old_size
-        return new_size
+        return old_size if path == file_path else new_size
 
     telegram_service.download_file.return_value.__enter__.return_value = file_path
     io_service.create_temp_pdf_file.return_value.__enter__.return_value = out_path

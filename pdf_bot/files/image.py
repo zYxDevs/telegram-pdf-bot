@@ -98,9 +98,7 @@ def get_pdf_preview(update, context):
     with tempfile.NamedTemporaryFile() as tf1:
         user_data = context.user_data
         file_id, file_name = user_data[PDF_INFO]
-        pdf_reader = open_pdf(update, context, file_id, tf1.name)
-
-        if pdf_reader:
+        if pdf_reader := open_pdf(update, context, file_id, tf1.name):
             # Get first page of PDF file
             pdf_writer = PdfFileWriter()
             pdf_writer.addPage(pdf_reader.getPage(0))
@@ -207,16 +205,15 @@ def get_pdf_images(update, context):
                 update.effective_message.reply_text(
                     _("Something went wrong, please try again")
                 )
-            else:
-                if not os.listdir(dir_name):
-                    update.effective_message.reply_text(
-                        _("I couldn't find any images in your PDF file")
-                    )
-                else:
-                    send_result_images(
-                        update, context, dir_name, TaskType.get_pdf_image
-                    )
+            elif os.listdir(dir_name):
+                send_result_images(
+                    update, context, dir_name, TaskType.get_pdf_image
+                )
 
+            else:
+                update.effective_message.reply_text(
+                    _("I couldn't find any images in your PDF file")
+                )
     # Clean up memory
     if user_data[PDF_INFO] == file_id:
         del user_data[PDF_INFO]

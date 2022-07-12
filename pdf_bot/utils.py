@@ -93,16 +93,12 @@ def open_pdf(update, context, file_id, file_name, task_type=None):
         )
 
     if pdf_reader is not None and pdf_reader.isEncrypted:
-        if task_type is not None:
-            if task_type == TaskType.encrypt_pdf:
-                text = _("Your PDF file is already encrypted")
-            else:
-                text = _(
-                    "Your PDF file is encrypted and you'll have to decrypt it first"
-                )
+        if task_type is not None and task_type == TaskType.encrypt_pdf:
+            text = _("Your PDF file is already encrypted")
         else:
-            text = _("Your PDF file is encrypted and you'll have to decrypt it first")
-
+            text = _(
+                "Your PDF file is encrypted and you'll have to decrypt it first"
+            )
         pdf_reader = None
         update.effective_message.reply_text(text)
 
@@ -160,21 +156,20 @@ def send_result_file(
             ),
             reply_markup=reply_markup,
         )
+    elif output_filename.endswith(".png"):
+        message.chat.send_action(ChatAction.UPLOAD_PHOTO)
+        message.reply_photo(
+            open(output_filename, "rb"),
+            caption=_("Here is your result file"),
+            reply_markup=reply_markup,
+        )
     else:
-        if output_filename.endswith(".png"):
-            message.chat.send_action(ChatAction.UPLOAD_PHOTO)
-            message.reply_photo(
-                open(output_filename, "rb"),
-                caption=_("Here is your result file"),
-                reply_markup=reply_markup,
-            )
-        else:
-            message.chat.send_action(ChatAction.UPLOAD_DOCUMENT)
-            message.reply_document(
-                document=open(output_filename, "rb"),
-                caption=_("Here is your result file"),
-                reply_markup=reply_markup,
-            )
+        message.chat.send_action(ChatAction.UPLOAD_DOCUMENT)
+        message.reply_document(
+            document=open(output_filename, "rb"),
+            caption=_("Here is your result file"),
+            reply_markup=reply_markup,
+        )
 
     send_event(update, context, task, EventAction.complete)
 
@@ -192,6 +187,4 @@ def get_support_markup(update, context):
             InlineKeyboardButton(_("Support PDF Bot"), callback_data=PAYMENT),
         ]
     ]
-    reply_markup = InlineKeyboardMarkup(keyboard)
-
-    return reply_markup
+    return InlineKeyboardMarkup(keyboard)
