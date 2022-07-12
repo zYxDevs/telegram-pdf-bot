@@ -12,11 +12,9 @@ from pdf_bot.utils import check_user_data, set_lang
 
 def get_back_markup(update, context):
     _ = set_lang(update, context)
-    reply_markup = ReplyKeyboardMarkup(
+    return ReplyKeyboardMarkup(
         [[_(BACK)]], one_time_keyboard=True, resize_keyboard=True
     )
-
-    return reply_markup
 
 
 def check_back_user_data(update, context):

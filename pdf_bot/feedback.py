@@ -24,14 +24,12 @@ slack_client = WebClient(SLACK_TOKEN)
 
 
 def feedback_cov_handler() -> ConversationHandler:
-    conv_handler = ConversationHandler(
+    return ConversationHandler(
         entry_points=[CommandHandler("feedback", feedback)],
         states={0: [MessageHandler(TEXT_FILTER, check_text)]},
         fallbacks=[CommandHandler("cancel", cancel)],
         run_async=True,
     )
-
-    return conv_handler
 
 
 def feedback(update: Update, context: CallbackContext) -> int:
