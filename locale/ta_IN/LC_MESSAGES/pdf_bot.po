@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: telegram-pdf-bot\n"
 "Report-Msgid-Bugs-To: zeshuaro@gmail.com\n"
-"POT-Creation-Date: 2023-11-30 10:05+0000\n"
-"PO-Revision-Date: 2023-12-01 08:17\n"
+"POT-Creation-Date: 2025-02-01 20:45+0000\n"
+"PO-Revision-Date: 2025-02-01 20:45\n"
 "Last-Translator: \n"
 "Language: ta\n"
 "Language-Team: Tamil\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.13.1\n"
+"Generated-By: Babel 2.17.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-Project: telegram-pdf-bot\n"
 "X-Crowdin-Project-ID: 370289\n"
@@ -51,7 +51,7 @@ msgstr "PTM பாட் வரவேற்கிறோம்!"
 msgid "Key features:"
 msgstr "முக்கிய அம்சங்கள்:"
 
-#: pdf_bot/command/command_service.py:40
+#: pdf_bot/command/command_service.py:41
 msgid "- Compress, merge, preview, rename, split and add watermark to PDF files"
 msgstr "- PTM கோப்புகளில் வாட்டர்மார்க் கைஅழுத்தவும், ஒன்றிணைக்கவும், முன்னோட்டம், மறுபெயரிடவும், பிரிக்கவும் மற்றும் சேர்க்கவும்"
 
@@ -80,6 +80,7 @@ msgid "- And more..."
 msgstr "- மேலும்..."
 
 #: pdf_bot/command/command_service.py:49
+#, python-brace-format
 msgid "Type {command} to see how to use PDF Bot"
 msgstr "PTM போட் ஐ எவ்வாறு பயன்படுத்துவது என்பதைப் பார்க்க {command} தட்டச்சு செய்யவும்"
 
@@ -88,12 +89,12 @@ msgid "Set Language 🌎"
 msgstr "மொழி 🌎 அமை"
 
 #: pdf_bot/command/command_service.py:60
-#: pdf_bot/telegram_internal/telegram_service.py:221
+#: pdf_bot/telegram_internal/telegram_service.py:222
 msgid "Join Channel"
 msgstr "சேனலில் சேரவும்"
 
 #: pdf_bot/command/command_service.py:61 pdf_bot/payment/payment_service.py:74
-#: pdf_bot/telegram_internal/telegram_service.py:222
+#: pdf_bot/telegram_internal/telegram_service.py:223
 msgid "Support PDF Bot"
 msgstr "PTM போட் ஆதரவு"
 
@@ -118,22 +119,27 @@ msgid "The rest of the tasks can be performed by using the following commands:"
 msgstr "மீதமுள்ள பணிகளை பின்வரும் கட்டளைகளைப் பயன்படுத்தி செய்ய முடியும்:"
 
 #: pdf_bot/command/command_service.py:75
+#, python-brace-format
 msgid "{command} - compare PDF files"
 msgstr "{command} - PTM கோப்புகளை ஒப்பிடு"
 
 #: pdf_bot/command/command_service.py:76
+#, python-brace-format
 msgid "{command} - merge PDF files"
 msgstr "{command} - PTM கோப்புகளை ஒன்றிணைக்கவும்"
 
-#: pdf_bot/command/command_service.py:77
+#: pdf_bot/command/command_service.py:78
+#, python-brace-format
 msgid "{command} - convert and combine multiple images into PDF files"
 msgstr "{command} - PTM கோப்புகளில் பல படங்களை மாற்றி இணைக்கவும்"
 
 #: pdf_bot/command/command_service.py:80
+#, python-brace-format
 msgid "{command} - create PDF files from text messages"
 msgstr "{command} - உரை செய்திகளில் இருந்து PPM கோப்புகளை உருவாக்கவும்"
 
 #: pdf_bot/command/command_service.py:83
+#, python-brace-format
 msgid "{command} - add watermark to PDF files"
 msgstr "{command} - PTM கோப்புகளில் வாட்டர்மார்க் சேர்க்கவும்"
 
@@ -158,14 +164,18 @@ msgid "There are no text differences between your PDF files"
 msgstr "உங்கள் PTM கோப்புகளுக்கு இடையே உரை வேறுபாடுகள் இல்லை"
 
 #: pdf_bot/error/error_handler.py:38 pdf_bot/error/error_handler.py:44
-#: pdf_bot/telegram_internal/telegram_service.py:101
-#: pdf_bot/telegram_internal/telegram_service.py:117
+#: pdf_bot/telegram_internal/telegram_service.py:102
+#: pdf_bot/telegram_internal/telegram_service.py:118
 msgid "Something went wrong, please try again"
 msgstr "ஏதோ தவறு நடந்தது, தயவுசெய்து மீண்டும் முயற்சிக்கவும்"
 
-#: pdf_bot/error/error_handler.py:57 pdf_bot/error/error_service.py:17
+#: pdf_bot/error/error_handler.py:58 pdf_bot/error/error_service.py:17
 msgid "The button has expired, start over with your file or command"
 msgstr "பொத்தான் காலாவதியாகிவிட்டது, உங்கள் கோப்பு அல்லது கட்டளையுடன் தொடங்கவும்"
+
+#: pdf_bot/error/error_handler.py:60
+msgid "The resulted image is invalid, try again"
+msgstr "இதன் விளைவாக உருவம் தவறானது, மீண்டும் முயற்சிக்கவும்"
 
 #: pdf_bot/feedback/feedback_service.py:31
 msgid "Send me your feedback in English"
@@ -183,7 +193,7 @@ msgstr "உங்கள் கருத்துக்கு நன்றி, �
 msgid "Your file is too big for me to download and process"
 msgstr "பதிவிறக்க மற்றும் செயலாக்க உங்கள் கோப்பு எனக்கு மிகவும் பெரியது"
 
-#: pdf_bot/file/file_service.py:55
+#: pdf_bot/file/file_service.py:56
 msgid "Note that this is a Telegram Bot limitation and there's nothing I can do unless Telegram changes this limit"
 msgstr "இது ஒரு தந்தி பாட் வரம்பு மற்றும் தந்தி இந்த வரம்பை மாற்றாவிட்டால் என்னால் எதுவும் செய்ய முடியாது என்பதை நினைவில் கொள்க"
 
@@ -211,11 +221,11 @@ msgstr "PDF க்கு"
 msgid "Remove last file"
 msgstr "கடைசி கோப்பை நீக்கு"
 
-#: pdf_bot/image_handler/batch_image_service.py:41
+#: pdf_bot/image_handler/batch_image_service.py:42
 msgid "Send me the images that you'll like to beautify or convert into a PDF file"
 msgstr "நீங்கள் அழகுபடுத்த அல்லது PTM கோப்பு மாற்ற விரும்பும் படங்களை எனக்கு அனுப்பவும்"
 
-#: pdf_bot/image_handler/batch_image_service.py:44
+#: pdf_bot/image_handler/batch_image_service.py:45
 msgid "Note that the images will be beautified and converted in the order that you send me"
 msgstr "நீங்கள் எனக்கு அனுப்பும் வரிசையில் படங்கள் அழகுபடுத்தப்பட்டு மாற்றப்படும் என்பதை நினைவில் கொள்க"
 
@@ -223,7 +233,7 @@ msgstr "நீங்கள் எனக்கு அனுப்பும் வ
 msgid "You've sent me these images so far:"
 msgstr "நீங்கள் இதுவரை இந்த படங்களை எனக்கு அனுப்பியுள்ளீர்கள்:"
 
-#: pdf_bot/image_handler/batch_image_service.py:106
+#: pdf_bot/image_handler/batch_image_service.py:107
 msgid "Select the task from below if you've sent me all the images, or keep sending me the images"
 msgstr "நீங்கள் எனக்கு அனைத்து படங்களையும் அனுப்பியிருந்தால், அல்லது படங்களை எனக்கு அனுப்பினால் கீழே இருந்து பணியைத் தேர்ந்தெடுக்கவும்"
 
@@ -232,6 +242,7 @@ msgid "You've already removed all the images you've sent me"
 msgstr "நீங்கள் எனக்கு அனுப்பிய அனைத்து படங்களையும் ஏற்கனவே நீக்கிவிட்டீர்கள்"
 
 #: pdf_bot/image_handler/batch_image_service.py:131
+#, python-brace-format
 msgid "{file_name} has been removed"
 msgstr "{file_name} அகற்றப்பட்டது"
 
@@ -256,6 +267,7 @@ msgid "Select your language"
 msgstr "உங்கள் மொழியைத் தேர்ந்தெடுக்கவும்"
 
 #: pdf_bot/language/language_service.py:119
+#, python-brace-format
 msgid "Your language has been set to {language}"
 msgstr "உங்கள் மொழி {language}"
 
@@ -267,35 +279,38 @@ msgstr "நீங்கள் இணைக்க விரும்பும் 
 msgid "Note that the files will be merged in the order that you send me"
 msgstr "நீங்கள் எனக்கு அனுப்பும் வரிசையில் கோப்புகள் இணைக்கப்படும் என்பதை நினைவில் கொள்க"
 
-#: pdf_bot/merge/merge_service.py:81
+#: pdf_bot/merge/merge_service.py:85
 msgid "You've sent me these PDF files so far:"
 msgstr "நீங்கள் இதுவரை இந்த PDF கோப்புகளை எனக்கு அனுப்பியுள்ளீர்கள்:"
 
-#: pdf_bot/merge/merge_service.py:94
+#: pdf_bot/merge/merge_service.py:99
+#, python-brace-format
 msgid "Press {done} if you've sent me all the PDF files that you'll like to merge or keep sending me the PDF files"
 msgstr "நீங்கள் இணைக்க விரும்பும் அல்லது PTM கோப்புகளை எனக்கு அனுப்ப விரும்பும் அனைத்து PPM கோப்புகளைஎனக்கு அனுப்பியிருந்தால் {done} அழுத்தவும்"
 
-#: pdf_bot/merge/merge_service.py:116
+#: pdf_bot/merge/merge_service.py:120
 msgid "You've already removed all the PDF files you've sent me"
 msgstr "நீங்கள் எனக்கு அனுப்பிய அனைத்து PDF கோப்புகளையும் ஏற்கனவே நீக்கியுள்ளீர்கள்"
 
-#: pdf_bot/merge/merge_service.py:120
+#: pdf_bot/merge/merge_service.py:124
+#, python-brace-format
 msgid "{file_name} has been removed for merging"
 msgstr "{file_name} இணைப்பதற்கு அகற்றப்பட்டுள்ளது"
 
-#: pdf_bot/merge/merge_service.py:142
+#: pdf_bot/merge/merge_service.py:146
 msgid "You haven't sent me any PDF files"
 msgstr "நீங்கள் எனக்கு எந்த PPM கோப்புகளை அனுப்பவில்லை"
 
-#: pdf_bot/merge/merge_service.py:145
+#: pdf_bot/merge/merge_service.py:149
 msgid "You've only sent me one PDF file"
 msgstr "நீங்கள் எனக்கு ஒரு PPM கோப்பை மட்டுமே அனுப்பியுள்ளீர்கள்"
 
-#: pdf_bot/merge/merge_service.py:158
+#: pdf_bot/merge/merge_service.py:162
 msgid "Merging your PDF files"
 msgstr "உங்கள் PPM கோப்புகளை இணைத்தல்"
 
 #: pdf_bot/payment/payment_service.py:26
+#, python-brace-format
 msgid "{message} {emoji} (${value})"
 msgstr "{message} {emoji} (${value})"
 
@@ -339,36 +354,36 @@ msgstr "PTM போட் மொழிபெயர்க்க உதவுங்
 msgid "Your PDF file is encrypted, decrypt it first then try again"
 msgstr "உங்கள் PDF கோப்பு குறியாக்கம் செய்யப்பட்டுள்ளது, முதலில் அதை மறைகுறியாக்கவும், பின்னர் மீண்டும் முயற்சிக்கவும்"
 
-#: pdf_bot/pdf/pdf_service.py:163
+#: pdf_bot/pdf/pdf_service.py:164
 msgid "Your PDF file is not encrypted"
 msgstr "உங்கள் PPM கோப்பு குறியாக்கம் செய்யப்படவில்லை"
 
-#: pdf_bot/pdf/pdf_service.py:167
+#: pdf_bot/pdf/pdf_service.py:168
 msgid "Incorrect password, please try again"
 msgstr "தவறான கடவுச்சொல், தயவுசெய்து மீண்டும் முயற்சிக்கவும்"
 
-#: pdf_bot/pdf/pdf_service.py:170
+#: pdf_bot/pdf/pdf_service.py:171
 msgid "Your PDF file is encrypted with a method that I can't decrypt"
 msgstr "உங்கள் PPM கோப்பு குறியாக்கம் செய்யப்பட்டது, நான் மறைகுறிநீக்க முடியாது என்று ஒரு முறை"
 
-#: pdf_bot/pdf/pdf_service.py:202
+#: pdf_bot/pdf/pdf_service.py:203
 msgid "No images found in your PDF file"
 msgstr "உங்கள் PDF கோப்பில் படங்கள் எதுவும் காணப்படவில்லை"
 
-#: pdf_bot/pdf/pdf_service.py:214
+#: pdf_bot/pdf/pdf_service.py:215
 msgid "No text found in your PDF file"
 msgstr "உங்கள் PDF கோப்பில் எந்த உரையும் காணப்படவில்லை"
 
-#: pdf_bot/pdf/pdf_service.py:233
+#: pdf_bot/pdf/pdf_service.py:234
 #, python-format
 msgid "I couldn't merge your PDF files as this file is invalid: %s"
 msgstr "இந்த கோப்பு செல்லுபடியாகாததால் உங்கள் PDF கோப்புகளை என்னால் இணைக்க முடியவில்லை: %s"
 
-#: pdf_bot/pdf/pdf_service.py:248
+#: pdf_bot/pdf/pdf_service.py:249
 msgid "Your PDF file already has a text layer"
 msgstr "உங்கள் PPM கோப்பு ஏற்கனவே உரை அடுக்கு உள்ளது"
 
-#: pdf_bot/pdf/pdf_service.py:337
+#: pdf_bot/pdf/pdf_service.py:338
 msgid "Your PDF file is invalid"
 msgstr "உங்கள் PDF கோப்பு செல்லுபடியாகாது"
 
@@ -377,6 +392,7 @@ msgid "Compress"
 msgstr "நெருங்கி அழுத்து"
 
 #: pdf_bot/pdf_processor/compress_pdf_processor.py:35
+#, python-brace-format
 msgid "File size reduced by {percent}, from {old_size} to {new_size}"
 msgstr "கோப்பு அளவு {percent}மூலம் குறைக்கப்பட்டது, {old_size} இருந்து {new_size}"
 
@@ -388,27 +404,27 @@ msgstr "சதவீதம் வாரியாக"
 msgid "To margin size"
 msgstr "விளிம்பு அளவிற்கு"
 
-#: pdf_bot/pdf_processor/crop_pdf_processor.py:23
+#: pdf_bot/pdf_processor/crop_pdf_processor.py:24
 msgid "Send me a number between 0 and 100\n\n"
 "This is the percentage of margin space to retain between the content in your PDF file and the page"
 msgstr "0 முதல் 100\n\n"
 "இடையே ஒரு எண்ணை எனக்கு அனுப்பவும் இது உங்கள் PDF கோப்பில் உள்ள உள்ளடக்கத்திற்கும் பக்கத்திற்கும் இடையில் தக்க வைத்துக் கொள்ள வேண்டிய விளிம்பு இடத்தின் சதவீதம்"
 
-#: pdf_bot/pdf_processor/crop_pdf_processor.py:29
+#: pdf_bot/pdf_processor/crop_pdf_processor.py:30
 msgid "Send me a number that you'll like to adjust the margin size\n\n"
 "Positive numbers will decrease the margin size and negative numbers will increase it"
 msgstr "நீங்கள் விளிம்பு அளவை சரிசெய்ய விரும்பும் ஒரு எண்ணை எனக்கு அனுப்புங்கள்\n\n"
 "நேர்மறை எண்கள் விளிம்பு அளவைக் குறைக்கும் மற்றும் எதிர்மறை எண்கள் அதை அதிகரிக்கும்"
 
-#: pdf_bot/pdf_processor/crop_pdf_processor.py:55
+#: pdf_bot/pdf_processor/crop_pdf_processor.py:54
 msgid "Crop"
 msgstr "சாட்டைக்கோல்"
 
-#: pdf_bot/pdf_processor/crop_pdf_processor.py:59
+#: pdf_bot/pdf_processor/crop_pdf_processor.py:58
 msgid "Select the crop type you'll like to perform"
 msgstr "நீங்கள் செய்ய விரும்பும் பயிர் வகையைத் தேர்ந்தெடுக்கவும்"
 
-#: pdf_bot/pdf_processor/crop_pdf_processor.py:67
+#: pdf_bot/pdf_processor/crop_pdf_processor.py:66
 msgid "The crop values are invalid, try again"
 msgstr "பயிர் மதிப்புகள் செல்லாதவை, மீண்டும் முயற்சிக்கவும்"
 
@@ -463,11 +479,11 @@ msgstr "கோப்பு பெயர்களில் பின்வரு�
 msgid "Send me the file name that you'll like to rename your PDF file into"
 msgstr "உங்கள் PTM கோப்பை மறுபெயரிட விரும்பும் கோப்பு பெயரை எனக்கு அனுப்பவும்"
 
-#: pdf_bot/pdf_processor/rotate_pdf_processor.py:38
+#: pdf_bot/pdf_processor/rotate_pdf_processor.py:37
 msgid "Rotate"
 msgstr "சுழற்று"
 
-#: pdf_bot/pdf_processor/rotate_pdf_processor.py:76
+#: pdf_bot/pdf_processor/rotate_pdf_processor.py:75
 msgid "Select the degrees that you'll like to rotate your PDF file in clockwise"
 msgstr "உங்கள் PP1 கோப்பை கடிகாரதிசையில் சுழற்ற விரும்பும் டிகிரியைத் தேர்ந்தெடுக்கவும்"
 
@@ -479,27 +495,27 @@ msgstr "காரணி அடிப்படையில்"
 msgid "To dimension"
 msgstr "பரிமாணத்திற்கு"
 
-#: pdf_bot/pdf_processor/scale_pdf_processor.py:24
+#: pdf_bot/pdf_processor/scale_pdf_processor.py:25
 msgid "Send me the scaling factors for the horizontal and vertical axes\n\n"
 "Example: 2 0.5 - this will double the horizontal axis and halve the vertical axis"
 msgstr "கிடைமட்ட மற்றும் செங்குத்து அச்சுகளுக்கான அளவிடல் காரணிகளை எனக்கு அனுப்பவும்\n\n"
 "எடுத்துக்காட்டு: 2 0.5 - இது கிடைமட்ட அச்சை இரட்டிப்பாக்கும் மற்றும் செங்குத்து அச்சை பாதியாகக் குறைக்கும்"
 
-#: pdf_bot/pdf_processor/scale_pdf_processor.py:30
+#: pdf_bot/pdf_processor/scale_pdf_processor.py:31
 msgid "Send me the width and height\n\n"
 "Example: 150 200 - this will set the width to 150 and height to 200"
 msgstr "அகலம் மற்றும் உயரத்தை எனக்கு அனுப்பவும்\n\n"
 "எடுத்துக்காட்டு: 150 200 - இது அகலத்தை 150 ஆகவும் உயரத்தை 200 ஆகவும் அமைக்கும்"
 
-#: pdf_bot/pdf_processor/scale_pdf_processor.py:55
+#: pdf_bot/pdf_processor/scale_pdf_processor.py:54
 msgid "Scale"
 msgstr "பெரிதாக்கு"
 
-#: pdf_bot/pdf_processor/scale_pdf_processor.py:59
+#: pdf_bot/pdf_processor/scale_pdf_processor.py:58
 msgid "Select the scale type you'll like to perform"
 msgstr "நீங்கள் செய்ய விரும்பும் அளவுகோல் வகையைத் தேர்ந்தெடுக்கவும்"
 
-#: pdf_bot/pdf_processor/scale_pdf_processor.py:67
+#: pdf_bot/pdf_processor/scale_pdf_processor.py:66
 msgid "The scale values are invalid, try again"
 msgstr "அளவுகோல் மதிப்புகள் செல்லுபடியாகவில்லை, மீண்டும் முயற்சிக்கவும்"
 
@@ -520,38 +536,47 @@ msgid "General usage"
 msgstr "பொதுவான பயன்பாடு"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:57
+#, python-brace-format
 msgid "{range}      all pages"
 msgstr "{range}      அனைத்து பக்கங்களிலும்"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:58
+#, python-brace-format
 msgid "{range}      page 8 only"
 msgstr "{range}      பக்கம் 8 மட்டும்"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:59
+#, python-brace-format
 msgid "{range}    first three pages"
 msgstr "{range}    முதல் மூன்று பக்கங்கள்"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:60
+#, python-brace-format
 msgid "{range}     from page 8 onward"
 msgstr "{range}     பக்கம் 8 முதல்"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:61
+#, python-brace-format
 msgid "{range}     last page only"
 msgstr "{range}     கடைசி பக்கம் மட்டும்"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:62
+#, python-brace-format
 msgid "{range}    all pages except the last page"
 msgstr "கடைசி பக்கத்தைத் தவிர மற்ற அனைத்து பக்கங்களையும் {range}"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:63
+#, python-brace-format
 msgid "{range}     second last page only"
 msgstr "{range}     இரண்டாவது கடைசி பக்கம் மட்டும்"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:64
+#, python-brace-format
 msgid "{range}    last two pages"
 msgstr "கடைசி இரண்டு பக்கங்களை {range}"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:65
+#, python-brace-format
 msgid "{range}  third and second last pages"
 msgstr "{range}  மூன்றாவது மற்றும் இரண்டாவது கடைசி பக்கங்கள்"
 
@@ -560,56 +585,61 @@ msgid "Advanced usage"
 msgstr "மேம்பட்ட பயன்பாடு"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:67
+#, python-brace-format
 msgid "{range}    pages {pages} and to the end"
 msgstr "{range}    பக்கங்கள் {pages} மற்றும் இறுதி வரை"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:70
+#, python-brace-format
 msgid "{range} pages {pages}"
 msgstr "{range} பக்கங்கள் {pages}"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:71
+#, python-brace-format
 msgid "{range}   all pages in reversed order"
 msgstr "{range}   அனைத்து பக்கங்களையும் தலைகீழ் வரிசையில்"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:72
+#, python-brace-format
 msgid "{range} pages {pages} except {page}"
 msgstr "{page}தவிர {range} பக்கங்கள் {pages}"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:75
+#, python-brace-format
 msgid "{range}  pages {pages}"
 msgstr "{range}  பக்கங்கள் {pages}"
 
-#: pdf_bot/telegram_internal/telegram_service.py:67
+#: pdf_bot/telegram_internal/telegram_service.py:69
 msgid "Your file is too large for me to download and process, please try again with a different file\n\n"
 "Note that this limit is enforced by Telegram and there's nothing I can do unless Telegram changes it"
 msgstr "உங்கள் கோப்பு நான் பதிவிறக்கம் செய்து செயலாக்க முடியாத அளவுக்கு பெரியது, தயவுசெய்து வேறு கோப்புடன் மீண்டும் முயற்சிக்கவும்\n\n"
 "இந்த வரம்பு டெலிகிராம் மூலம் செயல்படுத்தப்படுகிறது என்பதை நினைவில் கொள்க, டெலிகிராம் அதை மாற்றாவிட்டால் என்னால் எதுவும் செய்ய முடியாது"
 
-#: pdf_bot/telegram_internal/telegram_service.py:79
+#: pdf_bot/telegram_internal/telegram_service.py:81
 msgid "The file is too large for me to send to you\n\n"
 "Note that this limit is enforced by Telegram and there's nothing I can do unless Telegram changes it"
 msgstr "இந்த கோப்பு எனக்கு அனுப்ப முடியாத அளவுக்கு மிகப் பெரியதாக உள்ளது\n\n"
 "இந்த வரம்பு டெலிகிராமால் செயல்படுத்தப்படுகிறது என்பதையும், டெலிகிராம் அதை மாற்றாவிட்டால் என்னால் எதுவும் செய்ய முடியாது என்பதையும் நினைவில் கொள்க"
 
-#: pdf_bot/telegram_internal/telegram_service.py:155
+#: pdf_bot/telegram_internal/telegram_service.py:156
 msgid "Your file is not an image, please try again"
 msgstr "உங்கள் கோப்பு ஒரு பிம்பம் அல்ல, தயவுசெய்து மீண்டும் முயற்சிக்கவும்"
 
-#: pdf_bot/telegram_internal/telegram_service.py:161
+#: pdf_bot/telegram_internal/telegram_service.py:162
 msgid "No image found in your message"
 msgstr "உங்கள் செய்தியில் எந்த படமும் காணப்படவில்லை"
 
-#: pdf_bot/telegram_internal/telegram_service.py:171
+#: pdf_bot/telegram_internal/telegram_service.py:172
 msgid "Your file is not a PDF file, please try again"
 msgstr "உங்கள் கோப்பு PPM கோப்பு அல்ல, தயவுசெய்து மீண்டும் முயற்சிக்கவும்"
 
-#: pdf_bot/telegram_internal/telegram_service.py:196
-#: pdf_bot/telegram_internal/telegram_service.py:199
+#: pdf_bot/telegram_internal/telegram_service.py:197
+#: pdf_bot/telegram_internal/telegram_service.py:200
 msgid "Action cancelled"
 msgstr "நடவடிக்கை ரத்து"
 
-#: pdf_bot/telegram_internal/telegram_service.py:270
-#: pdf_bot/telegram_internal/telegram_service.py:278
+#: pdf_bot/telegram_internal/telegram_service.py:271
+#: pdf_bot/telegram_internal/telegram_service.py:279
 msgid "Here is your result file"
 msgstr "இங்கே உங்கள் விளைவாக கோப்பு உள்ளது"
 
@@ -621,11 +651,13 @@ msgstr "குதி"
 msgid "Send me the text that you'll like to write into your PDF file"
 msgstr "உங்கள் PTM கோப்பில் எழுத விரும்பும் உரையை எனக்கு அனுப்பவும்"
 
-#: pdf_bot/text/text_service.py:58
+#: pdf_bot/text/text_service.py:59
+#, python-brace-format
 msgid "Send me the font that you'll like to use for the PDF file or press {skip} to use the default font"
 msgstr "PTM கோப்பிற்கு நீங்கள் பயன்படுத்த விரும்பும் எழுத்துருவை எனக்கு அனுப்பவும் அல்லது இயல்புநிலை எழுத்துருவை பயன்படுத்த {skip} அழுத்தவும்"
 
 #: pdf_bot/text/text_service.py:62
+#, python-brace-format
 msgid "See here for the list of supported fonts: {fonts}"
 msgstr "ஆதரிக்கப்படும் எழுத்துருக்களின் பட்டியலுக்கு இங்கே பார்க்கவும்: {fonts}"
 

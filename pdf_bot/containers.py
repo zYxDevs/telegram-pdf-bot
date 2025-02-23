@@ -1,6 +1,4 @@
-import pydantic
 from dependency_injector import containers, providers
-from pydantic_settings import BaseSettings
 from requests import Session
 from slack_sdk import WebClient as SlackClient
 from telegram.ext import AIORateLimiter, ExtBot
@@ -18,7 +16,7 @@ from pdf_bot.file import FileHandler, FileService
 from pdf_bot.image import ImageService
 from pdf_bot.image_handler import BatchImageHandler, BatchImageService
 from pdf_bot.image_processor import BeautifyImageProcessor, ImageTaskProcessor, ImageToPdfProcessor
-from pdf_bot.io import IOService
+from pdf_bot.io_internal import IOService
 from pdf_bot.language import LanguageHandler, LanguageRepository, LanguageService
 from pdf_bot.log import InterceptLoggingHandler, MyLogHandler
 from pdf_bot.merge import MergeHandler, MergeService
@@ -46,8 +44,6 @@ from pdf_bot.telegram_internal import TelegramService
 from pdf_bot.text import TextHandler, TextRepository, TextService
 from pdf_bot.watermark import WatermarkHandler, WatermarkService
 from pdf_bot.webpage import WebpageHandler, WebpageService
-
-pydantic.BaseSettings = BaseSettings
 
 
 class Core(containers.DeclarativeContainer):

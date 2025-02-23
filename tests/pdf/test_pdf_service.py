@@ -5,14 +5,14 @@ import pytest
 from img2pdf import Rotation
 from ocrmypdf.exceptions import EncryptedPdfError, PriorOcrFoundError, TaggedPDFError
 from pdfminer.pdfdocument import PDFPasswordIncorrect
-from pypdf import PageObject, PdfFileMerger, PdfFileReader, PdfFileWriter
+from pypdf import PageObject, PdfReader, PdfWriter
 from pypdf.errors import PdfReadError as PyPdfReadError
 from pypdf.pagerange import PageRange
 from weasyprint import CSS, HTML
 from weasyprint.text.fonts import FontConfiguration
 
 from pdf_bot.cli import CLIService, CLIServiceError
-from pdf_bot.io.io_service import IOService
+from pdf_bot.io_internal.io_service import IOService
 from pdf_bot.models import FileData
 from pdf_bot.pdf import (
     CompressResult,
@@ -64,7 +64,6 @@ class TestPDFService(
         self.textwrap_patcher = patch("pdf_bot.pdf.pdf_service.textwrap")
         self.pdf_reader_patcher = patch("pdf_bot.pdf.pdf_service.PdfReader")
         self.pdf_writer_patcher = patch("pdf_bot.pdf.pdf_service.PdfWriter")
-        self.pdf_merger_patcher = patch("pdf_bot.pdf.pdf_service.PdfMerger")
 
         self.mock_os = self.os_patcher.start()
         self.ocrmypdf = self.ocrmypdf_patcher.start()
@@ -72,7 +71,6 @@ class TestPDFService(
         self.textwrap_patcher.start()
         self.pdf_reader_cls = self.pdf_reader_patcher.start()
         self.pdf_writer_cls = self.pdf_writer_patcher.start()
-        self.pdf_merger_cls = self.pdf_merger_patcher.start()
 
     def teardown_method(self) -> None:
         self.os_patcher.stop()
@@ -81,17 +79,16 @@ class TestPDFService(
         self.textwrap_patcher.stop()
         self.pdf_reader_patcher.stop()
         self.pdf_writer_patcher.stop()
-        self.pdf_merger_patcher.stop()
         super().teardown_method()
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_add_watermark_to_pdf(self) -> None:
         src_file_id = "src_file_id"
         wmk_file_id = "wmk_file_id"
 
-        src_reader = MagicMock(spec=PdfFileReader)
-        wmk_reader = MagicMock(spec=PdfFileReader)
-        writer = MagicMock(spec=PdfFileWriter)
+        src_reader = MagicMock(spec=PdfReader)
+        wmk_reader = MagicMock(spec=PdfReader)
+        writer = MagicMock(spec=PdfWriter)
         src_reader.is_encrypted = wmk_reader.is_encrypted = False
 
         src_pages = [MagicMock(spec=PageObject) for _ in range(2)]
@@ -100,7 +97,7 @@ class TestPDFService(
         wmk_page = MagicMock(spec=PageObject)
         wmk_reader.pages = [wmk_page]
 
-        def pdf_file_reader_side_effect(file_id: str, *_args: Any, **_kwargs: Any) -> PdfFileReader:
+        def pdf_file_reader_side_effect(file_id: str, *_args: Any, **_kwargs: Any) -> PdfReader:
             if file_id == src_file_id:
                 return src_reader
             return wmk_reader
@@ -125,7 +122,7 @@ class TestPDFService(
             writer.write.assert_called_once()
             self.io_service.create_temp_pdf_file.assert_called_once_with("File_with_watermark")
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_add_watermark_to_pdf_read_error(self) -> None:
         self.pdf_reader_cls.side_effect = PyPdfReadError()
         with pytest.raises(PdfReadError):
@@ -135,15 +132,16 @@ class TestPDFService(
         calls = [call(self.TELEGRAM_FILE_ID) for _ in range(2)]
         self.telegram_service.download_pdf_file.assert_has_calls(calls, any_order=True)
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_grayscale_pdf(self) -> None:
         image_paths = "image_paths"
         image_bytes = "image_bytes"
         buffered_writer = self.mock_path_open(self.file_path)
 
-        with patch("pdf_bot.pdf.pdf_service.pdf2image") as pdf2image, patch(
-            "pdf_bot.pdf.pdf_service.img2pdf"
-        ) as img2pdf:
+        with (
+            patch("pdf_bot.pdf.pdf_service.pdf2image") as pdf2image,
+            patch("pdf_bot.pdf.pdf_service.img2pdf") as img2pdf,
+        ):
             pdf2image.convert_from_path.return_value = image_paths
             img2pdf.convert.return_value = image_bytes
 
@@ -162,7 +160,7 @@ class TestPDFService(
                 self.file_path.open.assert_called_once_with("wb")
                 buffered_writer.write.assert_called_once_with(image_bytes)
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_compare_pdfs(self) -> None:
         file_ids = ["a", "b"]
         with patch("pdf_bot.pdf.pdf_service.pdf_diff") as pdf_diff:
@@ -175,7 +173,7 @@ class TestPDFService(
                     out_file=self.file_path,
                 )
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_compress_pdf(self) -> None:
         old_size = 20
         new_size = 10
@@ -193,7 +191,7 @@ class TestPDFService(
             )
             self._assert_telegram_and_io_services("Compressed")
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_convert_to_images(self) -> None:
         with patch("pdf_bot.pdf.pdf_service.pdf2image") as pdf2image:
             async with self.sut.convert_pdf_to_images(self.TELEGRAM_FILE_ID) as actual:
@@ -207,7 +205,7 @@ class TestPDFService(
                 )
 
     @pytest.mark.parametrize("has_font_data", [True, False])
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_create_pdf_from_text(self, has_font_data: bool) -> None:
         font_data = stylesheets = None
         html = MagicMock(spec=HTML)
@@ -218,9 +216,11 @@ class TestPDFService(
             font_data = FontData("family", "url")
             stylesheets = [css]
 
-        with patch("pdf_bot.pdf.pdf_service.HTML") as html_cls, patch(
-            "pdf_bot.pdf.pdf_service.CSS"
-        ) as css_cls, patch("pdf_bot.pdf.pdf_service.FontConfiguration") as font_config_cls:
+        with (
+            patch("pdf_bot.pdf.pdf_service.HTML") as html_cls,
+            patch("pdf_bot.pdf.pdf_service.CSS") as css_cls,
+            patch("pdf_bot.pdf.pdf_service.FontConfiguration") as font_config_cls,
+        ):
             html_cls.return_value = html
             css_cls.return_value = css
             font_config_cls.return_value = font_config
@@ -249,7 +249,7 @@ class TestPDFService(
                 else:
                     css_cls.assert_not_called()
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_crop_pdf_by_percentage(self) -> None:
         percent = 0.1
 
@@ -261,7 +261,7 @@ class TestPDFService(
                 )
                 self._assert_telegram_and_io_services("Cropped")
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_crop_pdf_by_margin_size(self) -> None:
         margin_size = 10
 
@@ -276,10 +276,10 @@ class TestPDFService(
                 self._assert_telegram_and_io_services("Cropped")
 
     @pytest.mark.parametrize("num_pages", [0, 1, 2, 5])
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_decrypt_pdf(self, num_pages: int) -> None:
-        reader = MagicMock(spec=PdfFileReader)
-        writer = MagicMock(spec=PdfFileWriter)
+        reader = MagicMock(spec=PdfReader)
+        writer = MagicMock(spec=PdfWriter)
         reader.is_encrypted = True
 
         pages = [MagicMock() for _ in range(num_pages)]
@@ -296,9 +296,9 @@ class TestPDFService(
             calls = [call(page) for page in pages]
             writer.add_page.assert_has_calls(calls)
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_decrypt_pdf_not_encrypted(self) -> None:
-        reader = MagicMock(spec=PdfFileReader)
+        reader = MagicMock(spec=PdfReader)
         reader.is_encrypted = False
         self.pdf_reader_cls.return_value = reader
 
@@ -310,9 +310,9 @@ class TestPDFService(
         reader.decrypt.assert_not_called()
         self.io_service.create_temp_pdf_file.assert_not_called()
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_decrypt_pdf_incorrect_password(self) -> None:
-        reader = MagicMock(spec=PdfFileReader)
+        reader = MagicMock(spec=PdfReader)
         reader.is_encrypted = True
         reader.decrypt.return_value = 0
         self.pdf_reader_cls.return_value = reader
@@ -322,9 +322,9 @@ class TestPDFService(
                 pass
         self._assert_decrypt_failure(reader)
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_decrypt_pdf_invalid_encryption_method(self) -> None:
-        reader = MagicMock(spec=PdfFileReader)
+        reader = MagicMock(spec=PdfReader)
         reader.is_encrypted = True
         reader.decrypt.side_effect = NotImplementedError()
         self.pdf_reader_cls.return_value = reader
@@ -335,10 +335,10 @@ class TestPDFService(
         self._assert_decrypt_failure(reader)
 
     @pytest.mark.parametrize("num_pages", [0, 1, 2, 5])
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_encrypt_pdf(self, num_pages: int) -> None:
-        reader = MagicMock(spec=PdfFileReader)
-        writer = MagicMock(spec=PdfFileWriter)
+        reader = MagicMock(spec=PdfReader)
+        writer = MagicMock(spec=PdfWriter)
         reader.is_encrypted = False
 
         pages = [MagicMock() for _ in range(num_pages)]
@@ -355,9 +355,9 @@ class TestPDFService(
             calls = [call(page) for page in pages]
             writer.add_page.assert_has_calls(calls)
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_encrypt_pdf_already_encrypted(self) -> None:
-        reader = MagicMock(spec=PdfFileReader)
+        reader = MagicMock(spec=PdfReader)
         reader.is_encrypted = True
         self.pdf_reader_cls.return_value = reader
 
@@ -368,7 +368,7 @@ class TestPDFService(
         self.telegram_service.download_pdf_file.assert_called_once_with(self.TELEGRAM_FILE_ID)
         self.io_service.create_temp_pdf_file.assert_not_called()
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_extract_pdf_text(self) -> None:
         async with self.sut.extract_pdf_text(self.TELEGRAM_FILE_ID) as actual:
             assert actual == self.file_path
@@ -376,7 +376,7 @@ class TestPDFService(
             self.io_service.create_temp_txt_file.assert_called_once_with("PDF_text")
             self.extract_text.assert_called_once_with(self.download_path)
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_extract_pdf_text_error(self) -> None:
         self.extract_text.side_effect = PDFPasswordIncorrect
 
@@ -388,7 +388,7 @@ class TestPDFService(
         self.io_service.create_temp_txt_file.assert_not_called()
         self.extract_text.assert_called_once_with(self.download_path)
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_extract_pdf_text_no_text(self) -> None:
         self.extract_text.return_value = ""
 
@@ -400,7 +400,7 @@ class TestPDFService(
         self.io_service.create_temp_txt_file.assert_not_called()
         self.extract_text.assert_called_once_with(self.download_path)
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_extract_pdf_images(self) -> None:
         async with self.sut.extract_pdf_images(self.TELEGRAM_FILE_ID) as actual:
             assert actual == self.dir_path
@@ -411,7 +411,7 @@ class TestPDFService(
             )
             self.mock_os.listdir.assert_called_once_with(self.dir_path)
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_extract_pdf_images_no_images(self) -> None:
         self.mock_os.listdir.return_value = []
 
@@ -426,7 +426,7 @@ class TestPDFService(
         )
         self.mock_os.listdir.assert_called_once_with(self.dir_path)
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_extract_pdf_images_cli_error(self) -> None:
         self.cli_service.extract_pdf_images.side_effect = CLIServiceError()
 
@@ -441,28 +441,28 @@ class TestPDFService(
         )
         self.mock_os.listdir.assert_not_called()
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     @pytest.mark.parametrize("num_files", [0, 1, 2, 5])
     async def test_merge_pdfs(self, num_files: int) -> None:
         file_data_list, file_ids, file_paths = self._get_file_data_list(num_files)
-        merger = MagicMock(spec=PdfFileMerger)
-        self.pdf_merger_cls.return_value = merger
+        writer = MagicMock(spec=PdfWriter)
+        self.pdf_writer_cls.return_value = writer
         self.telegram_service.download_files.return_value.__aenter__.return_value = file_paths
 
         async with self.sut.merge_pdfs(file_data_list):
             self.telegram_service.download_files.assert_called_once_with(file_ids)
             calls = [call(x) for x in file_paths]
-            merger.append.assert_has_calls(calls)
+            writer.append.assert_has_calls(calls)
             self.io_service.create_temp_pdf_file.assert_called_once_with("Merged")
-            merger.write.assert_called_once()
+            writer.write.assert_called_once()
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     @pytest.mark.parametrize("exception", [PyPdfReadError(), ValueError()])
     async def test_merge_pdfs_read_error(self, exception: Exception) -> None:
         file_data_list, file_ids, file_paths = self._get_file_data_list(2)
-        merger = MagicMock(spec=PdfFileMerger)
-        merger.append.side_effect = exception
-        self.pdf_merger_cls.return_value = merger
+        writer = MagicMock(spec=PdfWriter)
+        writer.append.side_effect = exception
+        self.pdf_writer_cls.return_value = writer
         self.telegram_service.download_files.return_value.__aenter__.return_value = file_paths
 
         with pytest.raises(PdfReadError):
@@ -471,9 +471,9 @@ class TestPDFService(
 
         self.telegram_service.download_files.assert_called_once_with(file_ids)
         self.io_service.create_temp_pdf_file.assert_not_called()
-        merger.write.assert_not_called()
+        writer.write.assert_not_called()
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_ocr_pdf(self) -> None:
         async with self.sut.ocr_pdf(self.TELEGRAM_FILE_ID) as actual:
             assert actual == self.file_path
@@ -482,7 +482,7 @@ class TestPDFService(
                 self.download_path, self.file_path, progress_bar=False
             )
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     @pytest.mark.parametrize(
         ("error", "expected"),
         [
@@ -503,13 +503,13 @@ class TestPDFService(
             self.download_path, self.file_path, progress_bar=False
         )
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_preview_pdf(self) -> None:
         pdf_path = "pdf_path"
         out_path = "out_path"
 
-        reader = MagicMock(spec=PdfFileReader)
-        writer = MagicMock(spec=PdfFileWriter)
+        reader = MagicMock(spec=PdfReader)
+        writer = MagicMock(spec=PdfWriter)
         page = MagicMock(spec=PageObject)
         reader.is_encrypted = False
         reader.pages = [page]
@@ -534,7 +534,7 @@ class TestPDFService(
                 pdf2image.convert_from_path.assert_called_once_with(pdf_path, fmt="png")
                 image.save.assert_called_once_with(out_path)
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_rename_pdf(self) -> None:
         file_name = "file_name"
         with patch("pdf_bot.pdf.pdf_service.shutil") as shutil:
@@ -548,11 +548,11 @@ class TestPDFService(
                 shutil.copy.assert_called_once_with(self.download_path, expected)
 
     @pytest.mark.parametrize("num_pages", [0, 1, 2, 5])
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_rotate_pdf(self, num_pages: int) -> None:
         degree = 90
-        reader = MagicMock(spec=PdfFileReader)
-        writer = MagicMock(spec=PdfFileWriter)
+        reader = MagicMock(spec=PdfReader)
+        writer = MagicMock(spec=PdfWriter)
         reader.is_encrypted = False
 
         pages = [MagicMock(spec=PageObject) for _ in range(num_pages)]
@@ -575,12 +575,12 @@ class TestPDFService(
             writer.add_page.assert_has_calls(calls)
 
     @pytest.mark.parametrize("num_pages", [0, 1, 2, 5])
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_scale_pdf_by_factor(self, num_pages: int) -> None:
         scale_data = ScaleByData(1, 2)
 
-        reader = MagicMock(spec=PdfFileReader)
-        writer = MagicMock(spec=PdfFileWriter)
+        reader = MagicMock(spec=PdfReader)
+        writer = MagicMock(spec=PdfWriter)
         reader.is_encrypted = False
 
         pages = [MagicMock() for _ in range(num_pages)]
@@ -600,12 +600,12 @@ class TestPDFService(
             writer.add_page.assert_has_calls(calls)
 
     @pytest.mark.parametrize("num_pages", [0, 1, 2, 5])
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_scale_pdf_to_dimension(self, num_pages: int) -> None:
         scale_data = ScaleToData(1, 2)
 
-        reader = MagicMock(spec=PdfFileReader)
-        writer = MagicMock(spec=PdfFileWriter)
+        reader = MagicMock(spec=PdfReader)
+        writer = MagicMock(spec=PdfWriter)
         reader.is_encrypted = False
 
         pages = [MagicMock() for _ in range(num_pages)]
@@ -643,28 +643,28 @@ class TestPDFService(
             "2:-1",
         ],
     )
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_split_range_valid(self, split_range: str) -> None:
         assert self.sut.split_range_valid(split_range) is True
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_split_range_invalid(self) -> None:
         assert self.sut.split_range_valid("clearly_invalid") is False
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_split_pdf(self) -> None:
         split_range = "7:"
-        reader = MagicMock(spec=PdfFileReader)
-        merger = MagicMock(spec=PdfFileMerger)
+        reader = MagicMock(spec=PdfReader)
+        writer = MagicMock(spec=PdfWriter)
         reader.is_encrypted = False
 
         self.pdf_reader_cls.return_value = reader
-        self.pdf_merger_cls.return_value = merger
+        self.pdf_writer_cls.return_value = writer
 
         async with self.sut.split_pdf(self.TELEGRAM_FILE_ID, split_range) as actual:
             assert actual == self.file_path
             self._assert_telegram_and_io_services("Split")
-            merger.append.assert_called_once_with(reader, pages=PageRange(split_range))
+            writer.append.assert_called_once_with(reader, pages=PageRange(split_range))
 
     @staticmethod
     def _async_context_manager_side_effect_echo(

@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: telegram-pdf-bot\n"
 "Report-Msgid-Bugs-To: zeshuaro@gmail.com\n"
-"POT-Creation-Date: 2023-11-30 10:05+0000\n"
-"PO-Revision-Date: 2023-11-30 10:05\n"
+"POT-Creation-Date: 2025-02-01 20:45+0000\n"
+"PO-Revision-Date: 2025-02-01 20:45\n"
 "Last-Translator: \n"
 "Language: si\n"
 "Language-Team: Sinhala\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.13.1\n"
+"Generated-By: Babel 2.17.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-Project: telegram-pdf-bot\n"
 "X-Crowdin-Project-ID: 370289\n"
@@ -51,7 +51,7 @@ msgstr "PDF බොට් වෙත සාදරයෙන් පිළිගන�
 msgid "Key features:"
 msgstr "මූලික ලක්ෂණ:"
 
-#: pdf_bot/command/command_service.py:40
+#: pdf_bot/command/command_service.py:41
 msgid "- Compress, merge, preview, rename, split and add watermark to PDF files"
 msgstr "පීඩීඑෆ් ලිපි ගොනු වලට සම්පීඩනය කරන්න, ඒකාබද්ධ කරන්න, පෙරදසුන් කරන්න, නැවත නම් කරන්න, බෙදන්න සහ ජල සලකුණු එකතු කරන්න"
 
@@ -80,6 +80,7 @@ msgid "- And more..."
 msgstr "- සහ තවත්..."
 
 #: pdf_bot/command/command_service.py:49
+#, python-brace-format
 msgid "Type {command} to see how to use PDF Bot"
 msgstr "PDF බොට් භාවිතා කරන්නේ කෙසේදැයි බැලීමට {command} ටයිප් කරන්න"
 
@@ -88,12 +89,12 @@ msgid "Set Language 🌎"
 msgstr "භාෂාව සකසන්න 🌎"
 
 #: pdf_bot/command/command_service.py:60
-#: pdf_bot/telegram_internal/telegram_service.py:221
+#: pdf_bot/telegram_internal/telegram_service.py:222
 msgid "Join Channel"
 msgstr "නාලිකාවට සම්බන්ධ වන්න"
 
 #: pdf_bot/command/command_service.py:61 pdf_bot/payment/payment_service.py:74
-#: pdf_bot/telegram_internal/telegram_service.py:222
+#: pdf_bot/telegram_internal/telegram_service.py:223
 msgid "Support PDF Bot"
 msgstr "PDF බොට් සදහා උදව් කරන්න"
 
@@ -118,22 +119,27 @@ msgid "The rest of the tasks can be performed by using the following commands:"
 msgstr "පහත දැක්වෙන විධානයන් භාවිතා කිරීමෙන් ඉතිරි කාර්යයන් ඉටු කළ හැකිය:"
 
 #: pdf_bot/command/command_service.py:75
+#, python-brace-format
 msgid "{command} - compare PDF files"
 msgstr "{command} - PDF ගොනු සංසන්දනය කරන්න"
 
 #: pdf_bot/command/command_service.py:76
+#, python-brace-format
 msgid "{command} - merge PDF files"
 msgstr "{command} - PDF ගොනු ඒකාබද්ධ කරන්න"
 
-#: pdf_bot/command/command_service.py:77
+#: pdf_bot/command/command_service.py:78
+#, python-brace-format
 msgid "{command} - convert and combine multiple images into PDF files"
 msgstr ""
 
 #: pdf_bot/command/command_service.py:80
+#, python-brace-format
 msgid "{command} - create PDF files from text messages"
 msgstr "{command} - කෙටි පණිවුඩ වලින් PDF ගොනු සාදන්න"
 
 #: pdf_bot/command/command_service.py:83
+#, python-brace-format
 msgid "{command} - add watermark to PDF files"
 msgstr "{command} - පීඩීඑෆ් ගොනු වලට ජල සලකුණක් එක් කරන්න"
 
@@ -158,13 +164,17 @@ msgid "There are no text differences between your PDF files"
 msgstr "ඔබේ PDF ලිපිගොනු අතර පෙළ වෙනස්කම් නොමැත"
 
 #: pdf_bot/error/error_handler.py:38 pdf_bot/error/error_handler.py:44
-#: pdf_bot/telegram_internal/telegram_service.py:101
-#: pdf_bot/telegram_internal/telegram_service.py:117
+#: pdf_bot/telegram_internal/telegram_service.py:102
+#: pdf_bot/telegram_internal/telegram_service.py:118
 msgid "Something went wrong, please try again"
 msgstr "යම් දෙයක් වැරදිණි, කරුණාකර නැවත උත්සාහ කරන්න"
 
-#: pdf_bot/error/error_handler.py:57 pdf_bot/error/error_service.py:17
+#: pdf_bot/error/error_handler.py:58 pdf_bot/error/error_service.py:17
 msgid "The button has expired, start over with your file or command"
+msgstr ""
+
+#: pdf_bot/error/error_handler.py:60
+msgid "The resulted image is invalid, try again"
 msgstr ""
 
 #: pdf_bot/feedback/feedback_service.py:31
@@ -183,7 +193,7 @@ msgstr ""
 msgid "Your file is too big for me to download and process"
 msgstr "ඔබේ ගොනුව මට බාගත කර සැකසීමට නොහැකි තරම් විශාල ය"
 
-#: pdf_bot/file/file_service.py:55
+#: pdf_bot/file/file_service.py:56
 msgid "Note that this is a Telegram Bot limitation and there's nothing I can do unless Telegram changes this limit"
 msgstr "මෙය ටෙලිග්‍රාම් බොට් සීමාවක් බව සලකන්න, ටෙලිග්‍රාම් මෙම සීමාව වෙනස් නොකළහොත් මට කළ හැකි කිසිවක් නැත"
 
@@ -211,11 +221,11 @@ msgstr "PDF වෙත"
 msgid "Remove last file"
 msgstr ""
 
-#: pdf_bot/image_handler/batch_image_service.py:41
+#: pdf_bot/image_handler/batch_image_service.py:42
 msgid "Send me the images that you'll like to beautify or convert into a PDF file"
 msgstr ""
 
-#: pdf_bot/image_handler/batch_image_service.py:44
+#: pdf_bot/image_handler/batch_image_service.py:45
 msgid "Note that the images will be beautified and converted in the order that you send me"
 msgstr ""
 
@@ -223,7 +233,7 @@ msgstr ""
 msgid "You've sent me these images so far:"
 msgstr ""
 
-#: pdf_bot/image_handler/batch_image_service.py:106
+#: pdf_bot/image_handler/batch_image_service.py:107
 msgid "Select the task from below if you've sent me all the images, or keep sending me the images"
 msgstr ""
 
@@ -232,6 +242,7 @@ msgid "You've already removed all the images you've sent me"
 msgstr ""
 
 #: pdf_bot/image_handler/batch_image_service.py:131
+#, python-brace-format
 msgid "{file_name} has been removed"
 msgstr ""
 
@@ -256,6 +267,7 @@ msgid "Select your language"
 msgstr "භාෂාව තෝරන්න"
 
 #: pdf_bot/language/language_service.py:119
+#, python-brace-format
 msgid "Your language has been set to {language}"
 msgstr "{language}ලෙස සකසා ඇත"
 
@@ -267,35 +279,38 @@ msgstr "ඔබ ඒකාබද්ධ කිරීමට කැමති PDF ග�
 msgid "Note that the files will be merged in the order that you send me"
 msgstr "ඔබ මට එවන අනුපිළිවෙල අනුව ලිපි ගොනු ඒකාබද්ධ වන බව සලකන්න"
 
-#: pdf_bot/merge/merge_service.py:81
+#: pdf_bot/merge/merge_service.py:85
 msgid "You've sent me these PDF files so far:"
 msgstr ""
 
-#: pdf_bot/merge/merge_service.py:94
+#: pdf_bot/merge/merge_service.py:99
+#, python-brace-format
 msgid "Press {done} if you've sent me all the PDF files that you'll like to merge or keep sending me the PDF files"
 msgstr "ඔබ ඒකාබද්ධ කිරීමට කැමති සියලුම පීඩීඑෆ් ලිපිගොනු මට එව්වා නම් හෝ පීඩීඑෆ් ගොනු මට දිගටම එවුවහොත් {done} ඔබන්න"
 
-#: pdf_bot/merge/merge_service.py:116
+#: pdf_bot/merge/merge_service.py:120
 msgid "You've already removed all the PDF files you've sent me"
 msgstr ""
 
-#: pdf_bot/merge/merge_service.py:120
+#: pdf_bot/merge/merge_service.py:124
+#, python-brace-format
 msgid "{file_name} has been removed for merging"
 msgstr "{file_name} ඒකාබද්ධ කිරීම සඳහා ඉවත් කර ඇත"
 
-#: pdf_bot/merge/merge_service.py:142
+#: pdf_bot/merge/merge_service.py:146
 msgid "You haven't sent me any PDF files"
 msgstr "ඔබ මට PDF ලිපිගොනු කිසිවක් එවා නැත"
 
-#: pdf_bot/merge/merge_service.py:145
+#: pdf_bot/merge/merge_service.py:149
 msgid "You've only sent me one PDF file"
 msgstr "ඔබ මට එවා ඇත්තේ එක් PDF ගොනුවක් පමණි"
 
-#: pdf_bot/merge/merge_service.py:158
+#: pdf_bot/merge/merge_service.py:162
 msgid "Merging your PDF files"
 msgstr "ඔබගේ PDF ගොනු එකතු කරමින් පවතී"
 
 #: pdf_bot/payment/payment_service.py:26
+#, python-brace-format
 msgid "{message} {emoji} (${value})"
 msgstr "{message} {emoji} (${value})"
 
@@ -339,36 +354,36 @@ msgstr "PDF බොට් පරිවර්තනය කිරීමට උද�
 msgid "Your PDF file is encrypted, decrypt it first then try again"
 msgstr ""
 
-#: pdf_bot/pdf/pdf_service.py:163
+#: pdf_bot/pdf/pdf_service.py:164
 msgid "Your PDF file is not encrypted"
 msgstr "ඔබගේ PDF ගොනුව ආකේතනය කර නොමැත"
 
-#: pdf_bot/pdf/pdf_service.py:167
+#: pdf_bot/pdf/pdf_service.py:168
 msgid "Incorrect password, please try again"
 msgstr ""
 
-#: pdf_bot/pdf/pdf_service.py:170
+#: pdf_bot/pdf/pdf_service.py:171
 msgid "Your PDF file is encrypted with a method that I can't decrypt"
 msgstr "මට විකේතනය කළ නොහැකි ක්‍රමයක් සමඟ ඔබේ PDF ගොනුව සංකේතනය කර ඇත"
 
-#: pdf_bot/pdf/pdf_service.py:202
+#: pdf_bot/pdf/pdf_service.py:203
 msgid "No images found in your PDF file"
 msgstr ""
 
-#: pdf_bot/pdf/pdf_service.py:214
+#: pdf_bot/pdf/pdf_service.py:215
 msgid "No text found in your PDF file"
 msgstr ""
 
-#: pdf_bot/pdf/pdf_service.py:233
+#: pdf_bot/pdf/pdf_service.py:234
 #, python-format
 msgid "I couldn't merge your PDF files as this file is invalid: %s"
 msgstr ""
 
-#: pdf_bot/pdf/pdf_service.py:248
+#: pdf_bot/pdf/pdf_service.py:249
 msgid "Your PDF file already has a text layer"
 msgstr "ඔබගේ PDF ගොනුවට දැනටමත් අකුරු ස්ථරයක් ඇත"
 
-#: pdf_bot/pdf/pdf_service.py:337
+#: pdf_bot/pdf/pdf_service.py:338
 msgid "Your PDF file is invalid"
 msgstr ""
 
@@ -377,6 +392,7 @@ msgid "Compress"
 msgstr "හකුලන්න"
 
 #: pdf_bot/pdf_processor/compress_pdf_processor.py:35
+#, python-brace-format
 msgid "File size reduced by {percent}, from {old_size} to {new_size}"
 msgstr "{old_size} සිට {new_size}දක්වා {percent}කින් අඩු වේ"
 
@@ -388,25 +404,25 @@ msgstr ""
 msgid "To margin size"
 msgstr ""
 
-#: pdf_bot/pdf_processor/crop_pdf_processor.py:23
+#: pdf_bot/pdf_processor/crop_pdf_processor.py:24
 msgid "Send me a number between 0 and 100\n\n"
 "This is the percentage of margin space to retain between the content in your PDF file and the page"
 msgstr ""
 
-#: pdf_bot/pdf_processor/crop_pdf_processor.py:29
+#: pdf_bot/pdf_processor/crop_pdf_processor.py:30
 msgid "Send me a number that you'll like to adjust the margin size\n\n"
 "Positive numbers will decrease the margin size and negative numbers will increase it"
 msgstr ""
 
-#: pdf_bot/pdf_processor/crop_pdf_processor.py:55
+#: pdf_bot/pdf_processor/crop_pdf_processor.py:54
 msgid "Crop"
 msgstr "අනවශ්‍ය කොටස් කපා දමන්න"
 
-#: pdf_bot/pdf_processor/crop_pdf_processor.py:59
+#: pdf_bot/pdf_processor/crop_pdf_processor.py:58
 msgid "Select the crop type you'll like to perform"
 msgstr ""
 
-#: pdf_bot/pdf_processor/crop_pdf_processor.py:67
+#: pdf_bot/pdf_processor/crop_pdf_processor.py:66
 msgid "The crop values are invalid, try again"
 msgstr ""
 
@@ -460,11 +476,11 @@ msgstr ""
 msgid "Send me the file name that you'll like to rename your PDF file into"
 msgstr "ඔබගේ PDF ගොනුවේ නාමය වෙනස් කිරීමට ඔබ කැමති ගොනු නාමය මට එවන්න"
 
-#: pdf_bot/pdf_processor/rotate_pdf_processor.py:38
+#: pdf_bot/pdf_processor/rotate_pdf_processor.py:37
 msgid "Rotate"
 msgstr "කරකවන්න"
 
-#: pdf_bot/pdf_processor/rotate_pdf_processor.py:76
+#: pdf_bot/pdf_processor/rotate_pdf_processor.py:75
 msgid "Select the degrees that you'll like to rotate your PDF file in clockwise"
 msgstr "ඔබේ PDF ගොනුව දක්ෂිණාවර්තව භ්‍රමණය කිරීමට ඔබ කැමති අංශක ප්‍රමාණය තෝරන්න"
 
@@ -476,25 +492,25 @@ msgstr ""
 msgid "To dimension"
 msgstr ""
 
-#: pdf_bot/pdf_processor/scale_pdf_processor.py:24
+#: pdf_bot/pdf_processor/scale_pdf_processor.py:25
 msgid "Send me the scaling factors for the horizontal and vertical axes\n\n"
 "Example: 2 0.5 - this will double the horizontal axis and halve the vertical axis"
 msgstr ""
 
-#: pdf_bot/pdf_processor/scale_pdf_processor.py:30
+#: pdf_bot/pdf_processor/scale_pdf_processor.py:31
 msgid "Send me the width and height\n\n"
 "Example: 150 200 - this will set the width to 150 and height to 200"
 msgstr ""
 
-#: pdf_bot/pdf_processor/scale_pdf_processor.py:55
+#: pdf_bot/pdf_processor/scale_pdf_processor.py:54
 msgid "Scale"
 msgstr "පරිමාණය"
 
-#: pdf_bot/pdf_processor/scale_pdf_processor.py:59
+#: pdf_bot/pdf_processor/scale_pdf_processor.py:58
 msgid "Select the scale type you'll like to perform"
 msgstr ""
 
-#: pdf_bot/pdf_processor/scale_pdf_processor.py:67
+#: pdf_bot/pdf_processor/scale_pdf_processor.py:66
 msgid "The scale values are invalid, try again"
 msgstr ""
 
@@ -515,38 +531,47 @@ msgid "General usage"
 msgstr "සාමාන්‍ය භාවිතය"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:57
+#, python-brace-format
 msgid "{range}      all pages"
 msgstr "{range}      සියලුම පිටු"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:58
+#, python-brace-format
 msgid "{range}      page 8 only"
 msgstr "{range}      පිටුව 8 පමණි"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:59
+#, python-brace-format
 msgid "{range}    first three pages"
 msgstr "{range}    පළමු පිටු තුන"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:60
+#, python-brace-format
 msgid "{range}     from page 8 onward"
 msgstr "8 වන පිටුවේ සිට {range}"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:61
+#, python-brace-format
 msgid "{range}     last page only"
 msgstr "{range}     අවසාන පිටුව පමණි"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:62
+#, python-brace-format
 msgid "{range}    all pages except the last page"
 msgstr "{range}    අවසාන පිටුව හැර අනෙකුත් සියලුම පිටු"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:63
+#, python-brace-format
 msgid "{range}     second last page only"
 msgstr "{range}     අවසාන පිටුව පමණි"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:64
+#, python-brace-format
 msgid "{range}    last two pages"
 msgstr "{range}    අවසාන පිටු දෙක"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:65
+#, python-brace-format
 msgid "{range}  third and second last pages"
 msgstr "{range}  තුන්වන සහ දෙවන අවසන් පිටු"
 
@@ -555,54 +580,59 @@ msgid "Advanced usage"
 msgstr "උසස් භාවිතය"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:67
+#, python-brace-format
 msgid "{range}    pages {pages} and to the end"
 msgstr "{range}    පිටු {pages} සහ අවසානය දක්වා"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:70
+#, python-brace-format
 msgid "{range} pages {pages}"
 msgstr "{range} පිටු {pages}"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:71
+#, python-brace-format
 msgid "{range}   all pages in reversed order"
 msgstr "පිටු සියළු පිටු {range}"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:72
+#, python-brace-format
 msgid "{range} pages {pages} except {page}"
 msgstr "{range} පිටු {pages} හැර {page}"
 
 #: pdf_bot/pdf_processor/split_pdf_processor.py:75
+#, python-brace-format
 msgid "{range}  pages {pages}"
 msgstr "{range}  පිටු {pages}"
 
-#: pdf_bot/telegram_internal/telegram_service.py:67
+#: pdf_bot/telegram_internal/telegram_service.py:69
 msgid "Your file is too large for me to download and process, please try again with a different file\n\n"
 "Note that this limit is enforced by Telegram and there's nothing I can do unless Telegram changes it"
 msgstr ""
 
-#: pdf_bot/telegram_internal/telegram_service.py:79
+#: pdf_bot/telegram_internal/telegram_service.py:81
 msgid "The file is too large for me to send to you\n\n"
 "Note that this limit is enforced by Telegram and there's nothing I can do unless Telegram changes it"
 msgstr ""
 
-#: pdf_bot/telegram_internal/telegram_service.py:155
+#: pdf_bot/telegram_internal/telegram_service.py:156
 msgid "Your file is not an image, please try again"
 msgstr ""
 
-#: pdf_bot/telegram_internal/telegram_service.py:161
+#: pdf_bot/telegram_internal/telegram_service.py:162
 msgid "No image found in your message"
 msgstr ""
 
-#: pdf_bot/telegram_internal/telegram_service.py:171
+#: pdf_bot/telegram_internal/telegram_service.py:172
 msgid "Your file is not a PDF file, please try again"
 msgstr "ඔබේ ගොනුව PDF ගොනුවක් නොවේ, කරුණාකර නැවත උත්සාහ කරන්න"
 
-#: pdf_bot/telegram_internal/telegram_service.py:196
-#: pdf_bot/telegram_internal/telegram_service.py:199
+#: pdf_bot/telegram_internal/telegram_service.py:197
+#: pdf_bot/telegram_internal/telegram_service.py:200
 msgid "Action cancelled"
 msgstr "ක්‍රියාව අවලංගු කරන ලදි"
 
-#: pdf_bot/telegram_internal/telegram_service.py:270
-#: pdf_bot/telegram_internal/telegram_service.py:278
+#: pdf_bot/telegram_internal/telegram_service.py:271
+#: pdf_bot/telegram_internal/telegram_service.py:279
 msgid "Here is your result file"
 msgstr "මෙන්න ඔබේ සකස් කරන ලද ගොනුව"
 
@@ -614,11 +644,13 @@ msgstr ""
 msgid "Send me the text that you'll like to write into your PDF file"
 msgstr "ඔබගේ PDF ගොනුව තුල ලිවීමට ඔබ කැමති වචනය මට එවන්න"
 
-#: pdf_bot/text/text_service.py:58
+#: pdf_bot/text/text_service.py:59
+#, python-brace-format
 msgid "Send me the font that you'll like to use for the PDF file or press {skip} to use the default font"
 msgstr "පීඩීඑෆ් ගොනුව සඳහා ඔබ භාවිතා කිරීමට කැමති අකුරු හෝ මට පෙරනිමි අකුරු භාවිතා කිරීමට {skip}"
 
 #: pdf_bot/text/text_service.py:62
+#, python-brace-format
 msgid "See here for the list of supported fonts: {fonts}"
 msgstr "සහාය දක්වන අකුරු ලැයිස්තුව සඳහා මෙතැන බලන්න: {fonts}"
 
