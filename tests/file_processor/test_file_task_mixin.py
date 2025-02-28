@@ -22,7 +22,7 @@ class TestFileTaskMixin(LanguageServiceTestMixin, TelegramTestMixin):
         self.language_service = self.mock_language_service()
         self.sut = FileTaskMixin()
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_ask_task_helper(self) -> None:
         actual = await self.sut.ask_task_helper(
             self.language_service,
@@ -34,7 +34,7 @@ class TestFileTaskMixin(LanguageServiceTestMixin, TelegramTestMixin):
         assert actual == self.WAIT_FILE_TASK
         self._assert_inline_keyboard()
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_ask_task_helper_without_user_data(self) -> None:
         self.telegram_context.user_data = None
 
@@ -48,11 +48,11 @@ class TestFileTaskMixin(LanguageServiceTestMixin, TelegramTestMixin):
         assert actual == self.WAIT_FILE_TASK
         self._assert_inline_keyboard()
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     async def test_ask_task_helper_without_file_data_and_file(self) -> None:
-        self.telegram_context.user_data = (
-            self.telegram_message.document
-        ) = self.telegram_message.photo = None
+        self.telegram_context.user_data = self.telegram_message.document = (
+            self.telegram_message.photo
+        ) = None
 
         actual = await self.sut.ask_task_helper(
             self.language_service,

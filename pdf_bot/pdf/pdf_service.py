@@ -16,14 +16,14 @@ from ocrmypdf.exceptions import EncryptedPdfError, PriorOcrFoundError, TaggedPDF
 from pdfCropMargins import crop
 from pdfminer.high_level import extract_text
 from pdfminer.pdfdocument import PDFPasswordIncorrect
-from pypdf import PasswordType, PdfMerger, PdfReader, PdfWriter
+from pypdf import PasswordType, PdfReader, PdfWriter
 from pypdf.errors import PdfReadError as PyPdfReadError
 from pypdf.pagerange import PageRange
 from weasyprint import CSS, HTML
 from weasyprint.text.fonts import FontConfiguration
 
 from pdf_bot.cli import CLIService, CLIServiceError
-from pdf_bot.io import IOService
+from pdf_bot.io_internal import IOService
 from pdf_bot.models import FileData
 from pdf_bot.pdf.exceptions import (
     PdfDecryptError,
@@ -87,9 +87,10 @@ class PdfService:
 
     @asynccontextmanager
     async def compare_pdfs(self, file_id_a: str, file_id_b: str) -> AsyncGenerator[Path, None]:
-        async with self.telegram_service.download_pdf_file(
-            file_id_a
-        ) as file_name_a, self.telegram_service.download_pdf_file(file_id_b) as file_name_b:
+        async with (
+            self.telegram_service.download_pdf_file(file_id_a) as file_name_a,
+            self.telegram_service.download_pdf_file(file_id_b) as file_name_b,
+        ):
             with self.io_service.create_temp_png_file("Differences") as out_path:
                 pdf_diff.main(files=[file_name_a, file_name_b], out_file=out_path)
                 yield out_path
@@ -222,19 +223,19 @@ class PdfService:
     @asynccontextmanager
     async def merge_pdfs(self, file_data_list: list[FileData]) -> AsyncGenerator[Path, None]:
         file_ids = self._get_file_ids(file_data_list)
-        merger = PdfMerger()
+        writer = PdfWriter()
 
         async with self.telegram_service.download_files(file_ids) as file_paths:
             for i, file_path in enumerate(file_paths):
                 try:
-                    merger.append(file_path)
+                    writer.append(file_path)
                 except (PyPdfReadError, ValueError) as e:
                     raise PdfReadError(
                         _("I couldn't merge your PDF files as this file is invalid: %s")
                         % file_data_list[i].name
                     ) from e
 
-        with self._write_pdf(merger, "Merged") as out_path:
+        with self._write_pdf(writer, "Merged") as out_path:
             yield out_path
 
     @asynccontextmanager
@@ -319,10 +320,10 @@ class PdfService:
     @asynccontextmanager
     async def split_pdf(self, file_id: str, split_range: str) -> AsyncGenerator[Path, None]:
         reader = await self._open_pdf(file_id)
-        merger = PdfMerger()
-        merger.append(reader, pages=PageRange(split_range))
+        writer = PdfWriter()
+        writer.append(reader, pages=PageRange(split_range))
 
-        with self._write_pdf(merger, "Split") as out_path:
+        with self._write_pdf(writer, "Split") as out_path:
             yield out_path
 
     @staticmethod
@@ -341,9 +342,7 @@ class PdfService:
         return pdf_reader
 
     @contextmanager
-    def _write_pdf(
-        self, writer: PdfWriter | PdfMerger, file_prefix: str
-    ) -> Generator[Path, None, None]:
+    def _write_pdf(self, writer: PdfWriter, file_prefix: str) -> Generator[Path, None, None]:
         with self.io_service.create_temp_pdf_file(file_prefix) as out_path:
             writer.write(out_path)
             yield out_path

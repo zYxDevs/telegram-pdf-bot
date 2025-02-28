@@ -10,25 +10,33 @@ jobs:
     name: Update Translations
     runs-on: ubuntu-latest
     steps:
+      - name: Create GitHub App token 🔑
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+
       - name: Checkout 🛎️
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.PAT }}
+          token: ${{ steps.app-token.outputs.token }}
+          persist-credentials: false
 
       - name: Download translations 🌐
-        uses: crowdin/github-action@v1.15.2
+        uses: crowdin/github-action@v2.6.1
         with:
           upload_sources: false
           upload_translations: false
           download_translations: true
-          commit_message: "feat: new translations"
+          commit_message: "fix: new translations"
           create_pull_request: true
-          pull_request_title: "feat: new translations"
+          pull_request_title: "fix: new translations"
           pull_request_labels: l10n
           config: ./crowdin.yml
           source: locale/en_GB/LC_MESSAGES/pdf_bot.po
           translation: /locale/%locale_with_underscore%/LC_MESSAGES/pdf_bot.po
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}

@@ -5,7 +5,7 @@ from img2pdf import Rotation
 
 from pdf_bot.cli import CLIService
 from pdf_bot.image import ImageService
-from pdf_bot.io.io_service import IOService
+from pdf_bot.io_internal.io_service import IOService
 from pdf_bot.models import FileData
 from tests.language import LanguageServiceTestMixin
 from tests.telegram_internal import TelegramServiceTestMixin, TelegramTestMixin
@@ -29,7 +29,7 @@ class TestImageService(LanguageServiceTestMixin, TelegramServiceTestMixin, Teleg
             self.telegram_service,
         )
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     @pytest.mark.parametrize("num_files", [0, 1, 2, 5])
     async def test_beautify_and_convert_images_to_pdf(self, num_files: int) -> None:
         self.file_path.stem = self.FILE_PATH_STEM
@@ -47,7 +47,7 @@ class TestImageService(LanguageServiceTestMixin, TelegramServiceTestMixin, Teleg
                     pdfname=self.file_path,
                 )
 
-    @pytest.mark.asyncio()
+    @pytest.mark.asyncio
     @pytest.mark.parametrize("num_files", [0, 1, 2, 5])
     async def test_convert_images_to_pdf(self, num_files: int) -> None:
         image_bytes = "image_bytes"
